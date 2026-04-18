@@ -1,3 +1,97 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# ==================== Godot 4+ 核心忽略 ====================
+.godot/                  # 编辑器缓存、临时数据、构建缓存（强烈推荐忽略）
+.nomedia                 # Godot 4+ 生成的媒体忽略文件
+
+# ==================== Godot 生成文件 ====================
+# .import/               # 【重要】通常不要忽略 *.import 文件和 .import/ 目录！
+#                        # 这些文件包含导入设置（如纹理过滤、压缩等），忽略会导致 UID 变化、重新导入问题
+#                        # 只在极少数大型资产项目中才考虑用 Git LFS + 忽略部分 .import
+
+export.cfg
+export_presets.cfg       # 导出配置（Godot 4.1+ 相对安全，但仍建议忽略敏感凭证部分）
+export_credentials.cfg   # 凭证文件（如果存在）
+
+# 自动生成的翻译文件（从 CSV 导入）
+*.translation
+
+# ==================== Mono / C# 项目（如果使用） ====================
+.mono/
+data_*/
+mono_crash.*.json
+
+# ==================== Ziva 插件相关（通常无需额外忽略，但建议） ====================
+# Ziva 主要在 addons/ziva/ 或类似路径
+# 如果插件内部有临时日志、缓存或 AI 生成的临时文件，可按需添加：
+# addons/ziva/**/*.log
+# addons/ziva/cache/     # 如果 Ziva 有本地缓存目录（根据实际插件版本检查）
+# *.tmp                  # 通用临时文件
+
+# ==================== 操作系统相关 ====================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.nfs*
+
+# ==================== 编辑器 / IDE 相关 ====================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ==================== 构建 / 导出输出 ====================
+dist/
+build/
+export/
+*.apk
+*.aab
+*.exe
+*.app
+
+# ==================== 其他常见忽略 ====================
+*.tmp
+*.log
+*.bak
+
+# 通用插件缓存忽略（安全，不会影响核心功能）
+addons/**/cache/
+addons/**/temp/
+addons/**/build/
+addons/**/*.log
+addons/**/*.tmp
+
+# Ziva 可能产生的临时/缓存/日志文件（根据实际版本检查目录）
+addons/ziva_agent/cache/          # 如果存在 AI 响应缓存或本地模型缓存
+addons/ziva_agent/logs/
+addons/ziva_agent/temp/
+addons/ziva_agent/**/*.log
+addons/ziva_agent/**/*.tmp
+addons/ziva_agent/**/*.bak
+
+# 如果 Ziva 使用 GDExtension 编译输出（常见于高级插件）
+addons/ziva_agent/bin/            # 只忽略 bin 目录下的编译产物，但保留 .gdextension 文件
+addons/ziva_agent/bin/*.dll
+addons/ziva_agent/bin/*.so
+addons/ziva_agent/bin/*.dylib
+
+# 通用安全忽略（不会影响插件核心功能）
+addons/ziva_agent/**/__pycache__/
+addons/ziva_agent/**/*.pyc
