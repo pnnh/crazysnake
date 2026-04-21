@@ -1,0 +1,12 @@
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "c526d211fbc5e36bda98690398f6bfcd74ff1164",
+  "prompts": {},
+  "humans": {
+    "h_0d098b1c016293": {
+      "author": "larry"
+    }
+  }
+}
