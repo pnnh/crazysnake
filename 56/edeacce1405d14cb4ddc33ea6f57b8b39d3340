@@ -1,0 +1,33 @@
+project.godot
+  d9eff4adad0be076 22-29,33-36
+  h_0d098b1c016293 17,32
+scripts/snake_game.gd
+  d9eff4adad0be076 4,25-28,37-41,115-120,125-133,146-153,156-170
+.gitignore
+  h_0d098b1c016293 32-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "56edeacce1405d14cb4ddc33ea6f57b8b39d3340",
+  "prompts": {
+    "d9eff4adad0be076": {
+      "agent_id": {
+        "tool": "github-copilot",
+        "id": "7a485656-f10a-4613-90c6-5c1eff2de1a4",
+        "model": "copilot/claude-sonnet-4.6"
+      },
+      "human_author": "larry",
+      "messages": [],
+      "total_additions": 64,
+      "total_deletions": 10,
+      "accepted_lines": 60,
+      "overriden_lines": 0
+    }
+  },
+  "humans": {
+    "h_0d098b1c016293": {
+      "author": "larry"
+    }
+  }
+}
