@@ -1,7 +1,7 @@
 class_name SnakeGame
 extends Node2D
 
-const GRID_SIZE: int = 24
+const GRID_SIZE: int = 32
 const MOVE_DELAY_BASE: float = 0.18
 const MIN_MOVE_DELAY: float = 0.06
 const MIN_GRID_CELLS: int = 12
@@ -22,6 +22,10 @@ var move_timer: float = 0.0
 var apple_position: Vector2i = Vector2i.ZERO
 var score: int = 0
 
+var _head_texture: Texture2D = null
+var _body_texture: Texture2D = null
+var _apple_texture: Texture2D = null
+
 @onready var score_label: Label = $ScoreLabel
 
 func _ready() -> void:
@@ -30,6 +34,11 @@ func _ready() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
 	grid_columns = max(MIN_GRID_CELLS, int(viewport_size.x / GRID_SIZE))
 	grid_rows = max(MIN_GRID_CELLS, int(viewport_size.y / GRID_SIZE))
+	_head_texture = load("res://assets/sprites/snake_head.png")
+	_body_texture = load("res://assets/sprites/snake_body.png")
+	_apple_texture = load("res://assets/sprites/apple.png")
+	score_label.add_theme_font_size_override("font_size", 24)
+	get_tree().get_root().size_changed.connect(_on_viewport_size_changed)
 	_reset_game()
 
 func _process(delta: float) -> void:
@@ -103,9 +112,24 @@ func _reset_game() -> void:
 	_refresh_score_label()
 	queue_redraw()
 
+func _on_viewport_size_changed() -> void:
+	var viewport_size: Vector2 = get_viewport_rect().size
+	grid_columns = max(MIN_GRID_CELLS, int(viewport_size.x / GRID_SIZE))
+	grid_rows = max(MIN_GRID_CELLS, int(viewport_size.y / GRID_SIZE))
+	queue_redraw()
+
 func _refresh_score_label() -> void:
 	var score_text: String = "Score: %d" % score
 	score_label.text = score_text
+
+func _get_head_angle() -> float:
+	if direction == Vector2i.DOWN:
+		return PI / 2.0
+	elif direction == Vector2i.LEFT:
+		return PI
+	elif direction == Vector2i.UP:
+		return -PI / 2.0
+	return 0.0  # RIGHT is the sprite's default facing direction
 
 func _draw() -> void:
 	var viewport_size: Vector2 = get_viewport_rect().size
@@ -119,10 +143,28 @@ func _draw() -> void:
 		var line_start: Vector2 = Vector2(0, row_index * GRID_SIZE)
 		var line_end: Vector2 = Vector2(grid_columns * GRID_SIZE, row_index * GRID_SIZE)
 		draw_line(line_start, line_end, GRID_LINE_COLOR, 1.0)
-	for segment_index in range(snake.size()):
-		var segment: Vector2i = snake[segment_index]
-		var segment_color: Color = SNAKE_HEAD_COLOR if segment_index == 0 else SNAKE_BODY_COLOR
-		var segment_rect: Rect2 = Rect2(segment * GRID_SIZE, grid_rect_size)
-		draw_rect(segment_rect, segment_color)
+	# Draw apple
 	var apple_rect: Rect2 = Rect2(apple_position * GRID_SIZE, grid_rect_size)
-	draw_rect(apple_rect, APPLE_COLOR)
+	if _apple_texture:
+		draw_texture_rect(_apple_texture, apple_rect, false)
+	else:
+		draw_rect(apple_rect, APPLE_COLOR)
+	# Draw snake body segments (all segments except head)
+	for segment_index in range(1, snake.size()):
+		var segment: Vector2i = snake[segment_index]
+		var segment_rect: Rect2 = Rect2(segment * GRID_SIZE, grid_rect_size)
+		if _body_texture:
+			draw_texture_rect(_body_texture, segment_rect, false)
+		else:
+			draw_rect(segment_rect, SNAKE_BODY_COLOR)
+	# Draw snake head with rotation based on movement direction
+	if snake.size() > 0:
+		var head: Vector2i = snake[0]
+		if _head_texture:
+			var half_size: Vector2 = grid_rect_size / 2.0
+			var head_center: Vector2 = Vector2(head * GRID_SIZE) + half_size
+			draw_set_transform(head_center, _get_head_angle(), Vector2.ONE)
+			draw_texture_rect(_head_texture, Rect2(-half_size, grid_rect_size), false)
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		else:
+			draw_rect(Rect2(head * GRID_SIZE, grid_rect_size), SNAKE_HEAD_COLOR)

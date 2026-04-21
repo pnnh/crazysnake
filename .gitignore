@@ -29,6 +29,8 @@ mono_crash.*.json
 # addons/ziva/**/*.log
 # addons/ziva/cache/     # 如果 Ziva 有本地缓存目录（根据实际插件版本检查）
 # *.tmp                  # 通用临时文件
+addons/ziva_agent/
+ziva_installer/
 
 # ==================== 操作系统相关 ====================
 # macOS

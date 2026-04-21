@@ -14,11 +14,23 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="CrazyCube"
+config/name="CrazySnake"
 run/main_scene="res://scenes/SnakeGame.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/dpi/allow_hidpi=true
+
 [dotnet]
 
-project/assembly_name="CrazyCube"
+project/assembly_name="CrazySnake"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
