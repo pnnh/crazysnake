@@ -1,0 +1,16 @@
+worker/wrangler.jsonc
+  h_0d098b1c016293 1-10
+worker/README.md
+  h_0d098b1c016293 1-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "5fc4448a14b5970dd4479390670f28e7f0841692",
+  "prompts": {},
+  "humans": {
+    "h_0d098b1c016293": {
+      "author": "larry"
+    }
+  }
+}
