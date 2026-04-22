@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "crazysnake", // 自定义 Worker 名称
+  "main": "_worker.js", // 指向你的自定义 Worker 文件
+  "compatibility_date": "2026-04-21", // 使用当前日期或最新日期
+  "assets": {
+    "directory": "./", // Godot 导出文件夹根目录（包含 index.html 等）
+    "binding": "ASSETS" // 绑定名称，必须和 Worker 代码里的 env.ASSETS 一致
+  }
+}
